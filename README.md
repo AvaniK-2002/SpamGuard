@@ -35,6 +35,13 @@ Reason: Contains promotional phrases and suspicious phone number pattern.
 -Confidence Score: The classifier provides a confidence score based on the message features and phone number.
 
 -Reasoning: The system explains the classification decision by citing the presence of specific keywords in the text or a suspicious phone number pattern.
+
+## Screenshots
+
+![Screenshot 2025-01-02 233600](https://github.com/user-attachments/assets/1fdd494f-2f0b-47f0-be85-c294bd80b2b2)
+
+![Screenshot 2025-01-02 233620](https://github.com/user-attachments/assets/00fd459a-b842-4e27-98d1-dceea4ad9ec1)
+
 ## Installation
 
 Follow these steps to set up the system:
@@ -79,11 +86,7 @@ JavaScript: Used for frontend functionality, potentially for interacting with th
 ## Contributing
 
 Feel free to contribute to this project by submitting a pull request or opening an issue. Please ensure any code contributions are well-documented and tested.
-## Screenshots
 
-![Screenshot 2025-01-02 233600](https://github.com/user-attachments/assets/1fdd494f-2f0b-47f0-be85-c294bd80b2b2)
-
-![Screenshot 2025-01-02 233620](https://github.com/user-attachments/assets/00fd459a-b842-4e27-98d1-dceea4ad9ec1)
 
 
 ## Deployment

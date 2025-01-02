@@ -95,3 +95,8 @@ To deploy this project run
 
 ```bash
   npm run deploy
+```
+## Demo
+
+https://avanik-2002.github.io/SpamGuard/
+

@@ -1,0 +1,224 @@
+type,text,label,phone
+sms,"Congratulations! You've won a free iPhone! Click here to claim",spam,+1234567890
+email,"URGENT: Your account has been suspended. Click here to verify",spam,+419555123456
+sms,"Free entry to win £250 worth of shopping vouchers",spam,+4477889900
+email,"Dear colleague, Meeting at 3pm tomorrow in Room 401",ham,+1555012345
+sms,"Hey! Are we still on for dinner tonight?",ham,+1987654321
+email,"Your Amazon order #123-456 has been shipped",ham,+442071234567
+sms,"URGENT! Your bank account has been compromised",spam,+1122334455
+email,"50% OFF! Limited time offer on all products",spam,+9999999999
+sms,"Your verification code is: 123456",ham,+3366998877
+sms,"CLAIM YOUR PRIZE NOW! Call immediately",spam,+8885551234
+sms,"Amazing offer! Call now to receive $500",spam,+900123456
+sms,"Congratulations! You're selected for a prize",spam,+123456789012
+email,"Investment opportunity from abroad",spam,+419876543210
+sms,"Quick loans available! Call now",spam,+7099876543
+sms,"Your parcel delivery notification",ham,+441234567890
+sms,"Dentist appointment reminder tomorrow",ham,+1555789012
+sms,"Your food delivery is on the way",ham,+447890123456
+email,"Team meeting at 2 PM",ham,+6175550123
+sms,"Your Uber has arrived",ham,+1555901234
+sms,"Library: Your book is due tomorrow",ham,+442089876543
+sms,"WINNER!! Claim your $1000 prize now!",spam,+1111222233
+sms,"Your credit card has been charged $500",spam,+4195550000
+email,"Hot investment tips! Don't miss out",spam,+8885559999
+sms,"FREE: Get your dream vacation package",spam,+9001234567
+email,"Your PayPal account needs verification",spam,+4197777777
+sms,"20% discount at local store today",ham,+1555123456
+email,"Meeting rescheduled to 4 PM",ham,+442012345678
+sms,"Your table reservation is confirmed",ham,+1555666777
+email,"Invoice #12345 attached",ham,+441234567891
+sms,"Your prescription is ready for pickup",ham,+1555888999
+sms,"URGENT: Claim your lottery winnings",spam,+9991234567
+email,"Double your money in 24 hours!",spam,+4196666666
+sms,"Free gift card! Click here",spam,+8884445555
+email,"Your package delivery failed",spam,+7091234567
+sms,"Win an iPhone 15! Enter now",spam,+9002345678
+email,"Your flight booking confirmation",ham,+442345678901
+sms,"Reminder: Doctor's appointment tomorrow",ham,+1555444333
+email,"Project deadline extended to Friday",ham,+441122334455
+sms,"Your food order is confirmed",ham,+1555777888
+email,"Team lunch at 1 PM today",ham,+442233445566
+sms,"ALERT: Suspicious activity on account",spam,+4198888888
+email,"Make money from home! Easy work",spam,+8883334444
+sms,"Free cruise vacation! Limited time",spam,+9003456789
+email,"Your account will be terminated",spam,+7092345678
+sms,"Win a new car! Reply YES now",spam,+9004567890
+sms,"Your taxi will arrive in 5 minutes",ham,+1555222333
+email,"Weekly team report attached",ham,+442556677889
+sms,"Your order has been delivered",ham,+1555999888
+email,"Office closed for maintenance tomorrow",ham,+441234567892
+sms,"Your movie tickets are confirmed",ham,+1555666999
+sms,"URGENT: Bank transfer needed",spam,+4199999999
+email,"Get rich quick! Investment opportunity",spam,+8882223333
+sms,"Free iPhone 15! You're selected",spam,+9005678901
+email,"Your Netflix subscription expired",spam,+7093456789
+sms,"Win $10,000! Reply now",spam,+9006789012
+sms,"Your Deliveroo rider is nearby",ham,+1555111222
+email,"Client meeting at 11 AM",ham,+442345678902
+sms,"Your table is ready at Restaurant",ham,+1555444555
+email,"System maintenance notification",ham,+441234567893
+sms,"Your gym membership renewal notice",ham,+1555888777
+sms,"URGENT: Claim your inheritance",spam,+4191111111
+email,"Work from home opportunity!",spam,+8881112222
+sms,"Free Samsung Galaxy! Click here",spam,+9007890123
+email,"Your Apple ID is locked",spam,+7094567890
+sms,"Win a luxury vacation! Enter now",spam,+9008901234
+sms,"Your laundry is ready for pickup",ham,+1555333444
+email,"Tomorrow's meeting agenda",ham,+442345678903
+sms,"Your prescription has been refilled",ham,+1555666777
+email,"Building access code update",ham,+441234567894
+sms,"Your parking payment confirmation",ham,+1555999000
+sms,"Congratulations! You've won a $500 Amazon gift card",spam,+4112233445
+email,"Your account has been temporarily disabled",spam,+7095678901
+sms,"Important: Your bank requires verification",spam,+8880001111
+email,"Annual performance review scheduled",ham,+442301234567
+sms,"Reminder: Your doctor's appointment is tomorrow",ham,+1555001112
+email,"Limited time: Get 70% OFF on selected items",spam,+4112334556
+sms,"Congratulations! Free VIP access for a week",spam,+9009012345
+email,"Company holiday reminder",ham,+6175556789
+sms,"Your package is ready for collection",ham,+447700900111
+sms,"Exclusive offer! Buy one get one free",spam,+7111222333
+email,"Updated travel itinerary attached",ham,+442301234568
+sms,"Reminder: Insurance payment due soon",ham,+1555333445
+email,"Immediate action required on your account",spam,+4197778888
+sms,"Your appointment is confirmed for Monday",ham,+3365006007
+email,"Don't miss out on this investment!",spam,+8881234567
+sms,"Congratulations! You've been selected for a free cruise",spam,+9005432109
+email,"New project assignment attached",ham,+442012347890
+sms,"Your mobile recharge is successful",ham,+1555333111
+sms,"Act now! Get a $100 gift voucher",spam,+7096677889
+email,"Client call rescheduled to Thursday",ham,+441567890234
+sms,"Flash sale! Get 50% discount",spam,+9001029384
+sms,"Your gym session reminder",ham,+1555666111
+email,"Your credit card statement is ready",ham,+442211100234
+sms,"URGENT: Unusual activity detected",spam,+4193456781
+sms,"Your subscription is expiring soon",ham,+1555111555
+email,"Quick loan approval in 24 hours!",spam,+9001234568
+sms,"Reminder: Monthly membership fee due",ham,+447500700123
+email,"Meeting notes attached",ham,+442678901234
+sms,"Special offer! Call now for discounts",spam,+9002345679
+email,"Notification of system outage tomorrow",ham,+441234567897
+sms,"Congratulations! Exclusive rewards await",spam,+8885557770
+email,"Workshop reminder for next week",ham,+442201112345
+sms,"Important! Payment failed",ham,+1555001234
+sms,"Act fast! Limited time discount",spam,+7093451122
+email,"IT maintenance scheduled for tonight",ham,+4412345678901
+sms,"Don't miss out on free travel vouchers",spam,+9005678123
+email,"Company policy update attached",ham,+442233445678
+sms,"Check your account for exclusive rewards",spam,+4196781234
+email,"Reminder: Quarterly business review",ham,+442155566788
+sms,"Win free tickets to the game",spam,+9008899001
+sms,"Pizza delivery in 20 mins",ham,+1555777123
+email,"Project update for Q4",ham,+442256677899
+sms,"Flash sale! Up to 60% off on products",spam,+8889991234
+email,"Company-wide training scheduled",ham,+442399900111
+sms,"Act now for a free trial membership",spam,+7097890123
+email,"Upcoming deadline for project submission",ham,+441123456789
+sms,"Win free hotel stay! Limited time",spam,+9001234890
+sms,"Your cab will arrive shortly",ham,+1555004321
+email,"Holiday party invitation attached",ham,+442122334455
+sms,"Get $200 cashback on your next purchase",spam,+4115678009
+sms,"Important! Verify your account immediately",spam,+9007778889
+email,"Security alert: Login from new device",spam,+7090123456
+sms,"Congratulations! You've won a free spa day",spam,+8881002345
+sms,"Reminder: Renew your insurance policy",ham,+1555555432
+email,"Updated holiday schedule",ham,+441123409876
+sms,"Win a $500 shopping spree!",spam,+9001098765
+email,"Your statement for this month",ham,+442311145678
+sms,"Don't miss exclusive deals today",spam,+8884567890
+email,"Office hours update for Friday",ham,+441122333444
+sms,"Your laundry is ready for pickup",ham,+1555777788
+email,"Happy birthday! Enjoy your special day",ham,+442211123456
+sms,"Act fast for a free trip!",spam,+9002345987
+email,"Meeting room booking confirmation",ham,+442156789012
+sms,"Exclusive rewards just for you",spam,+7091122334
+email,"Weekly summary report attached",ham,+442345678904
+sms,"Limited time only! Free gifts available",spam,+8889998765
+email,"New course offering for employees",ham,+441567123456
+sms,"Special promotion! Get a free coffee with purchase",spam,+9001122334
+email,"IT team meeting scheduled for next Monday",ham,+442301234569
+sms,"Congratulations! You've been pre-approved for a loan",spam,+8883335555
+email,"Project kickoff meeting tomorrow at 10 AM",ham,+6175556780
+sms,"Last chance! Claim your free trial now",spam,+9004455667
+email,"Office closed for public holiday on Monday",ham,+442333445678
+sms,"Win an all-expense paid trip to Hawaii",spam,+9005566778
+sms,"Reminder: Payment due tomorrow",ham,+447712345678
+email,"Update: New health policies for employees",ham,+442345678905
+sms,"Your account has been temporarily locked",spam,+8881231234
+email,"Join us for a company-wide town hall",ham,+442667788990
+sms,"Your monthly bank statement is ready",ham,+1555666123
+sms,"Act now! $200 discount on your next purchase",spam,+7091223445
+email,"Employee engagement survey invitation",ham,+441345678901
+sms,"Limited time offer: Free product samples",spam,+9007788990
+email,"Congratulations on your work anniversary!",ham,+442456789012
+sms,"Reminder: Your dental appointment is tomorrow",ham,+1555333667
+sms,"Alert: Payment failure on your last transaction",spam,+4196677889
+email,"Weekly team sync on Wednesday",ham,+442567890123
+sms,"Flash sale: Up to 70% off on all items",spam,+8882224444
+sms,"You've been selected for a prize! Call now",spam,+9009876543
+email,"Holiday party RSVP deadline approaching",ham,+441256789012
+sms,"Free weekend getaway for two! Claim now",spam,+9001122110
+email,"Invoice for last month's services attached",ham,+441667788990
+sms,"Reminder: Your prescription is ready",ham,+1555119988
+email,"Alert: Attempted login from new device",spam,+7092233445
+sms,"Limited offer: Free shipping on all orders",spam,+9003344556
+email,"Birthday wishes to all October employees",ham,+442345678906
+sms,"Claim a free gift card! Limited stock",spam,+8886543210
+sms,"Bank Alert: Suspicious withdrawal detected",spam,+4193456789
+email,"Your tax documents are ready",ham,+442456789013
+sms,"Urgent! Your account needs verification",spam,+7099876543
+email,"Workshop on productivity tools",ham,+442567890124
+sms,"Win big! Participate in our lucky draw",spam,+9005566778
+sms,"Exclusive access! Free trials for new users",spam,+8881112233
+email,"Monthly report submission reminder",ham,+441667788991
+sms,"Congratulations! You've won a $1,000 gift card",spam,+8885556667
+sms,"Important: Verify your payment information",spam,+9001122330
+email,"Year-end holiday schedule announcement",ham,+442678901345
+sms,"Special offer just for you! Don't miss out",spam,+9002233445
+sms,"Your invoice is ready for download",ham,+1555222777
+email,"Team-building event next Saturday",ham,+442345678907
+sms,"Your recent order has been shipped",ham,+1555444999
+sms,"Congratulations! You're a lucky winner",spam,+8886667778
+email,"Performance reviews scheduled for next month",ham,+441234567899
+sms,"Win an iPad! Enter now",spam,+9003344556
+email,"Safety drill scheduled for this Friday",ham,+442345678908
+sms,"URGENT: Update your payment details",spam,+7092233440
+sms,"Special offer on electronics! Limited stock",spam,+9008899002
+email,"Monthly performance update attached",ham,+441667788992
+sms,"Congratulations! Free tickets to the event",spam,+8880001110
+sms,"Reminder: Payment overdue",ham,+1555888990
+email,"Join us for a company picnic!",ham,+442345678909
+sms,"Exclusive deal on home appliances",spam,+9005566771
+email,"Schedule for next quarter released",ham,+442234567890
+sms,"Free membership for a month! Sign up now",spam,+7093322110
+email,"Quarterly budget review next week",ham,+442345678910
+sms,"Get a chance to win a car! Enter today",spam,+9003344557
+email,"Your subscription renewal notice",ham,+441123409878
+sms,"Alert: High-value transaction detected",spam,+4198888890
+sms,"Claim your free voucher today!",spam,+8885554440
+email,"Company updates: October newsletter",ham,+441345678902
+sms,"Your parcel is out for delivery",ham,+1555666778
+email,"Invitation to employee wellness program",ham,+442345678911
+sms,"Win $500 instantly! Call now",spam,+9002233446
+email,"Reminder: Policy review meeting tomorrow",ham,+441234567895
+sms,"Free entry to our lucky draw!",spam,+8889992220
+sms,"Urgent: Update your address details",ham,+1555444111
+email,"System upgrade scheduled tonight",ham,+441667788993
+sms,"Congratulations! You've won a free laptop",spam,+8881122334
+email,"Weekly newsletter: October highlights",ham,+442345678912
+sms,"Win a holiday trip! Call to claim",spam,+9005566772
+email,"Expense reimbursement forms attached",ham,+441234567896
+sms,"Exclusive deal on mobile plans",spam,+9002233448
+email,"Meeting minutes from last week's call",ham,+442345678913
+sms,"Act fast! Your reward is waiting",spam,+7097788991
+email,"Updated contact directory for employees",ham,+442567890125
+sms,"Congratulations! You've won a vacation",spam,+8883334445
+email,"Monthly training schedule updated",ham,+442345678914
+sms,"Claim your free gift! Call now",spam,+9003344558
+sms,"Urgent: Suspicious login detected",spam,+7091122110
+email,"Reminder: Submit timesheets",ham,+441234567897
+sms,"Limited time: Get free home delivery",spam,+9001122337
+sms,"Congratulations! You’re a lucky winner!",spam,+8880002233
+email,"Office cleaning schedule for this week",ham,+442345678915
+sms,"Reminder: Update your profile information",ham,+1555991234

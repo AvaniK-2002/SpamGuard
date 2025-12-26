@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>SpamGuard - AI-Powered Spam Detection</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
@@ -589,12 +590,63 @@
                     <p class="text-xs text-opacity-50">
                         © 2025 SpamGuard. Advanced AI-Powered Spam Detection System.
                     </p>
+=======
+    <title>Spam Detection System</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen p-8">
+    <div class="max-w-2xl mx-auto">
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h1 class="text-2xl font-bold mb-6">Spam Detection System</h1>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                    <textarea 
+                        id="messageInput" 
+                        class="w-full p-2 border rounded-md"
+                        rows="4"
+                        placeholder="Enter message to analyze..."
+                    ></textarea>
+                </div>
+                
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
+                    <input 
+                        type="text" 
+                        id="phoneInput"
+                        class="w-full p-2 border rounded-md"
+                        placeholder="Enter phone number..."
+                    >
+                </div>
+
+                <button 
+                    onclick="analyzeMessage()"
+                    class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600 transition-colors"
+                >
+                    Analyze
+                </button>
+
+                <div id="result" class="hidden mt-4 p-4 rounded-md">
+                    <p class="text-lg font-medium">Result: <span id="prediction"></span></p>
+                    <p>Confidence: <span id="confidence"></span></p>
+                    <p>Reason: <span id="reason"></span></p>
+                </div>
+
+                <div id="loading" class="hidden">
+                    <p class="text-center text-gray-600">Analyzing...</p>
+                </div>
+
+                <div id="error" class="hidden mt-4 p-4 rounded-md bg-red-100">
+                    <p class="text-red-700" id="errorMessage"></p>
+>>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815
                 </div>
             </div>
         </div>
     </div>
 
     <script>
+<<<<<<< HEAD
         // Global variables
         let socket = null;
         let recognition = null;
@@ -1206,6 +1258,23 @@
                     stepIndex++;
                 }
             }, 800);
+=======
+        async function analyzeMessage() {
+            const text = document.getElementById('messageInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            
+            // Reset UI
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+            const loading = document.getElementById('loading');
+            
+            if (!text && !phone) {
+                showError('Please enter either a message or a phone number');
+                return;
+            }
+
+            loading.style.display = 'block';
+>>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815
 
             try {
                 const response = await fetch('/analyze', {
@@ -1217,6 +1286,7 @@
                 });
 
                 const data = await response.json();
+<<<<<<< HEAD
                 const endTime = performance.now();
                 const responseTime = Math.round(endTime - startTime);
                 
@@ -1230,10 +1300,16 @@
                     
                     // Add to chart
                     addToChart(new Date(), data.prediction === 'spam');
+=======
+                
+                if (response.ok) {
+                    showResult(data);
+>>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815
                 } else {
                     throw new Error(data.error || 'Failed to analyze');
                 }
             } catch (error) {
+<<<<<<< HEAD
                 clearInterval(stepInterval);
                 showError(error.message || 'Failed to analyze. Please check your connection and try again.');
             } finally {
@@ -1267,6 +1343,32 @@
                 }, index * 100);
             });
         });
+=======
+                showError(error.message || 'Failed to analyze. Please try again.');
+            } finally {
+                loading.style.display = 'none';
+            }
+        }
+
+        function showResult(data) {
+            const resultDiv = document.getElementById('result');
+            resultDiv.className = data.prediction === 'spam' 
+                ? 'mt-4 p-4 rounded-md bg-red-100' 
+                : 'mt-4 p-4 rounded-md bg-green-100';
+            resultDiv.style.display = 'block';
+            
+            document.getElementById('prediction').textContent = data.prediction.toUpperCase();
+            document.getElementById('confidence').textContent = 
+                `${(data.confidence * 100).toFixed(1)}%`;
+            document.getElementById('reason').textContent = data.reason;
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            document.getElementById('errorMessage').textContent = message;
+            errorDiv.style.display = 'block';
+        }
+>>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815
     </script>
 </body>
 </html>

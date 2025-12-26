@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # SpamGuard 🚀
 
 <div align="center">
@@ -201,3 +202,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 [![Star Repo](https://img.shields.io/github/stars/yourusername/SpamGuard?style=social)](https://github.com/yourusername/SpamGuard)
 
 </div>
+=======
+# SpamGuard
+>>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815

@@ -186,22 +186,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Design Patterns**: UI/UX best practices from leading tech companies
 - **Open Source Community**: For the amazing tools and libraries
 
-## 📞 Support
 
-- **Documentation**: Check our [Wiki](wiki) for detailed guides
-- **Issues**: Report bugs on [GitHub Issues](issues)
-- **Discussions**: Join our [Community Discussions](discussions)
-
----
-
-<div align="center">
-
-**Built with ❤️ by the SpamGuard Team**
-
-[![Follow Us](https://img.shields.io/github/followers/yourusername?style=social)](https://github.com/yourusername)
-[![Star Repo](https://img.shields.io/github/stars/yourusername/SpamGuard?style=social)](https://github.com/yourusername/SpamGuard)
-
-</div>
 =======
-# SpamGuard
->>>>>>> 8cd51b0a2443fb6656484bbee8bac7ec22a0b815
+

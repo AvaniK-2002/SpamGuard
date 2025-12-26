@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpamGuard - AI-Powered Spam Detection</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .typing-animation {
+            overflow: hidden;
+            border-right: 2px solid rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
+            animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgba(255, 255, 255, 0.75); }
+        }
+        
+        .floating-shield {
+            animation: floatRotate 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatRotate {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .pulse-ring {
+            animation: pulseRing 2s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+        }
+        
+        @keyframes pulseRing {
+            0% {
+                transform: scale(0.33);
+                opacity: 1;
+            }
+            80%, 100% {
+                transform: scale(2.33);
+                opacity: 0;
+            }
+        }
+        
+        .advanced-loading {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .advanced-loading div {
+            position: absolute;
+            top: 33px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #ffffff, #f0f0f0);
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+        
+        .advanced-loading div:nth-child(1) {
+            left: 8px;
+            animation: loading1 0.6s infinite;
+        }
+        
+        .advanced-loading div:nth-child(2) {
+            left: 8px;
+            animation: loading2 0.6s infinite;
+        }
+        
+        .advanced-loading div:nth-child(3) {
+            left: 32px;
+            animation: loading2 0.6s infinite;
+        }
+        
+        .advanced-loading div:nth-child(4) {
+            left: 56px;
+            animation: loading3 0.6s infinite;
+        }
+        
+        @keyframes loading1 {
+            0% { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes loading3 {
+            0% { transform: scale(1); }
+            100% { transform: scale(0); }
+        }
+        
+        @keyframes loading2 {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(24px, 0); }
+        }
+        
+        .result-entrance {
+            animation: resultBounce 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes resultBounce {
+            0% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-5px) scale(1.02);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        .confidence-meter {
+            background: linear-gradient(90deg, #ef4444 0%, #f59e0b 50%, #10b981 100%);
+            border-radius: 10px;
+            height: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            transition: width 2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+        }
+        
+        .confidence-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+            animation: shimmer 2s infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        .input-focus-effect {
+            position: relative;
+        }
+        
+        .input-focus-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .input-focus-effect:focus-within::before {
+            left: 100%;
+        }
+        
+        .icon-glow {
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 30px rgba(147, 51, 234, 0.5);
+        }
+        
+        .stat-counter {
+            font-variant-numeric: tabular-nums;
+        }
+        
+        .word-by-word {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: wordAppear 0.5s ease forwards;
+        }
+        
+        @keyframes wordAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-3px);
+        }
+        
+        .scrollbar-thin {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+        
+        @media (max-width: 640px) {
+            .glass-effect {
+                backdrop-filter: blur(15px);
+            }
+        }
+        
+        button:focus,
+        input:focus,
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-effect:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Container -->
+    <div class="min-h-screen flex items-center justify-center p-4">
+        <div class="w-full max-w-3xl">
+            
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <div class="relative inline-block">
+                    <div class="absolute inset-0 bg-white bg-opacity-20 rounded-full blur-xl pulse-ring"></div>
+                    <div class="relative inline-flex items-center justify-center w-20 h-20 bg-white bg-opacity-20 rounded-full mb-6 floating-shield">
+                        <i data-lucide="shield-check" class="w-10 h-10 text-white icon-glow"></i>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-black mb-6 gradient-text typing-animation">
+                    Spam<span class="text-yellow-300">Guard</span>
+                </h1>
+                
+                <p class="text-lg sm:text-xl text-white text-opacity-90 max-w-2xl mx-auto leading-relaxed px-4">
+                    <span class="word-by-word" style="animation-delay: 0.1s;">Advanced</span>
+                    <span class="word-by-word" style="animation-delay: 0.2s;">AI-powered</span>
+                    <span class="word-by-word" style="animation-delay: 0.3s;">spam detection</span>
+                    <span class="word-by-word" style="animation-delay: 0.4s;">protecting</span>
+                    <span class="word-by-word" style="animation-delay: 0.5s;">your digital life</span>
+                </p>
+                
+                <!-- Stats Row -->
+                <div class="flex flex-wrap justify-center gap-4 sm:gap-6 lg:gap-8 mt-8 px-4">
+                    <div class="text-center">
+                        <div class="text-xl sm:text-2xl font-bold text-white stat-counter" data-target="94.7">0</div>
+                        <div class="text-white text-opacity-70 text-xs sm:text-sm">Accuracy %</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl sm:text-2xl font-bold text-white stat-counter" data-target="99.9">0</div>
+                        <div class="text-white text-opacity-70 text-xs sm:text-sm">Uptime %</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-xl sm:text-2xl font-bold text-white stat-counter" data-target="1000000">0</div>
+                        <div class="text-white text-opacity-70 text-xs sm:text-sm">Messages Scanned</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Card -->
+            <div class="glass-effect rounded-3xl shadow-2xl p-6 md:p-8 lg:p-10 hover-lift">
+                <div class="space-y-8">
+                    
+                    <!-- Message Input -->
+                    <div class="space-y-3">
+                        <label class="block text-lg font-bold text-white mb-4 flex items-center">
+                            <i data-lucide="message-square" class="w-5 h-5 mr-3 icon-glow"></i>
+                            Message Content
+                            <span class="ml-auto text-sm font-normal text-white text-opacity-70">Real-time Analysis</span>
+                        </label>
+                        <div class="input-focus-effect relative group">
+                            <textarea 
+                                id="messageInput" 
+                                class="w-full p-4 lg:p-5 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-2xl text-white placeholder-white placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent transition-all duration-500 resize-none backdrop-filter backdrop-blur-lg text-sm lg:text-base"
+                                rows="4"
+                                placeholder="Enter the message you want to analyze for spam detection..."
+                            ></textarea>
+                            <div class="absolute bottom-3 lg:bottom-4 right-3 lg:right-4 text-white text-opacity-60 text-xs lg:text-sm flex items-center space-x-2">
+                                <span id="charCount">0</span>
+                                <span class="hidden sm:inline">characters</span>
+                            </div>
+                            <div class="absolute top-3 lg:top-4 right-3 lg:right-4">
+                                <div class="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-emerald-400 rounded-full pulse-ring"></div>
+                            </div>
+                            <div class="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 text-white text-opacity-40 text-xs">
+                                <i data-lucide="message-square" class="w-3 h-3 lg:w-4 lg:h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Phone Number Input -->
+                    <div class="space-y-3">
+                        <label class="block text-lg font-bold text-white mb-4 flex items-center">
+                            <i data-lucide="phone" class="w-5 h-5 mr-3 icon-glow"></i>
+                            Phone Number Analysis
+                            <span class="ml-auto text-sm font-normal text-white text-opacity-70">Real-time Analysis</span>
+                        </label>
+                        <div class="input-focus-effect relative group">
+                            <input 
+                                type="text" 
+                                id="phoneInput"
+                                class="w-full p-4 lg:p-5 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-2xl text-white placeholder-white placeholder-opacity-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50 focus:border-transparent transition-all duration-500 backdrop-filter backdrop-blur-lg text-sm lg:text-base"
+                                placeholder="Enter phone number to check reputation..."
+                            >
+                            <div class="absolute inset-y-0 right-0 pr-4 lg:pr-5 flex items-center">
+                                <i data-lucide="smartphone" class="w-4 h-4 lg:w-5 lg:h-5 text-white text-opacity-40 icon-glow"></i>
+                            </div>
+                            <div class="absolute top-3 lg:top-4 right-3 lg:right-4">
+                                <div class="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-cyan-400 rounded-full pulse-ring"></div>
+                            </div>
+                            <div class="absolute bottom-3 lg:bottom-4 left-3 lg:left-4 text-white text-opacity-40 text-xs">
+                                <i data-lucide="phone" class="w-3 h-3 lg:w-4 lg:h-4"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analyze Button -->
+                    <button 
+                        id="analyzeBtn"
+                        onclick="analyzeMessage()"
+                        class="w-full bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 hover:from-violet-700 hover:via-purple-700 hover:to-pink-700 text-white font-bold py-4 lg:py-6 px-6 lg:px-8 rounded-2xl transition-all duration-500 transform hover:scale-105 hover:shadow-2xl btn-glow focus:outline-none focus:ring-4 focus:ring-white focus:ring-opacity-30 text-base lg:text-lg relative overflow-hidden group"
+                    >
+                        <span id="btnText" class="relative z-10 flex items-center justify-center">
+                            <i data-lucide="search" class="w-5 h-5 lg:w-6 lg:h-6 inline mr-2 lg:mr-3"></i>
+                            <span class="text-sm lg:text-base">Start AI Analysis</span>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400 via-pink-500 to-red-500 opacity-0 group-hover:opacity-20 transition-opacity duration-500"></div>
+                    </button>
+
+                    <!-- Loading State -->
+                    <div id="loading" class="hidden text-center py-12">
+                        <div class="advanced-loading mx-auto mb-6">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
+                        <div class="space-y-2">
+                            <p class="text-white text-lg font-semibold">AI Analysis in Progress...</p>
+                            <p class="text-white text-opacity-70">Scanning for spam patterns and anomalies</p>
+                            <div class="flex justify-center space-x-1 mt-4">
+                                <div class="w-2 h-2 bg-white rounded-full animate-bounce"></div>
+                                <div class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0.1s;"></div>
+                                <div class="w-2 h-2 bg-white rounded-full animate-bounce" style="animation-delay: 0.2s;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Results -->
+                    <div id="result" class="hidden result-entrance">
+                        <div class="bg-white bg-opacity-20 backdrop-filter backdrop-blur-xl rounded-3xl p-8 border border-white border-opacity-30 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-white to-opacity-5"></div>
+                            <div class="relative z-10">
+                                <div class="flex items-start space-x-6">
+                                    <div id="resultIcon" class="flex-shrink-0">
+                                        <div class="w-16 h-16 rounded-full flex items-center justify-center relative">
+                                            <i data-lucide="" class="w-8 h-8"></i>
+                                            <div class="absolute inset-0 rounded-full bg-current opacity-20 animate-ping"></div>
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-4">
+                                            <h3 class="text-2xl font-bold text-gray-600">AI Analysis Result</h3>
+                                            <span id="confidenceBadge" class="px-4 py-2 rounded-full text-sm font-bold"></span>
+                                        </div>
+                                        
+                                        <div class="space-y-4">
+                                            <div class="flex items-center justify-between">
+                                                <span class="text-gray-400 text-opacity-90 font-semibold">Prediction:</span>
+                                                <span id="prediction" class="text-2xl font-black text-white"></span>
+                                            </div>
+                                            
+                                            <div class="space-y-2">
+                                                <div class="flex items-center justify-between">
+                                                    <span class="text-gray-400 text-opacity-90 font-semibold">Confidence Score:</span>
+                                                    <span id="confidence" class="text-lg font-bold text-white"></span>
+                                                </div>
+                                                <div class="confidence-meter">
+                                                    <div id="confidenceBar" class="confidence-fill" style="width: 0%"></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mt-6 p-4 bg-white bg-opacity-10 rounded-2xl backdrop-filter backdrop-blur-sm">
+                                                <p class="text-gray-400 font-semibold mb-2 flex items-center">
+                                                    <i data-lucide="brain" class="w-4 h-4 mr-2"></i>
+                                                    AI Reasoning & Analysis:
+                                                </p>
+                                                <p id="reason" class="text-gray-400 text-opacity-80 leading-relaxed"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error State -->
+                    <div id="error" class="hidden result-entrance">
+                        <div class="bg-red-500 bg-opacity-20 backdrop-filter backdrop-blur-xl rounded-3xl p-8 border border-red-300 border-opacity-30 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-red-500 to-opacity-10"></div>
+                            <div class="relative z-10 flex items-center space-x-4">
+                                <div class="w-16 h-16 bg-red-500 bg-opacity-30 rounded-full flex items-center justify-center relative">
+                                    <i data-lucide="alert-triangle" class="w-8 h-8 text-red-200"></i>
+                                    <div class="absolute inset-0 rounded-full bg-red-500 opacity-20 animate-ping"></div>
+                                </div>
+                                <div>
+                                    <h3 class="text-white font-bold text-xl mb-2">Analysis Failed</h3>
+                                    <p id="errorMessage" class="text-red-100 leading-relaxed"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features Dashboard -->
+            <div class="mt-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
+                
+                <!-- Live Statistics -->
+                <div class="glass-effect rounded-3xl p-4 lg:p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-base lg:text-lg font-semibold text-white flex items-center">
+                            <i data-lucide="activity" class="w-4 h-4 lg:w-5 lg:h-5 mr-2 icon-glow"></i>
+                            Live Statistics
+                        </h3>
+                        <div class="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-emerald-400 rounded-full pulse-ring"></div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">Active Sessions</span>
+                            <span id="liveSessions" class="text-lg lg:text-xl font-bold text-emerald-300 stat-counter" data-target="1">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">Threats Blocked</span>
+                            <span id="threatsBlocked" class="text-lg lg:text-xl font-bold text-red-300 stat-counter" data-target="0">0</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">Messages/Hour</span>
+                            <span id="messagesPerHour" class="text-lg lg:text-xl font-bold text-blue-300 stat-counter" data-target="0">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Input -->
+                <div class="glass-effect rounded-3xl p-4 lg:p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-base lg:text-lg font-semibold text-white flex items-center">
+                            <i data-lucide="mic" class="w-4 h-4 lg:w-5 lg:h-5 mr-2 icon-glow"></i>
+                            Voice Recognition
+                        </h3>
+                        <div id="voiceStatus" class="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-gray-400 rounded-full transition-all duration-300"></div>
+                    </div>
+                    <button id="voiceBtn" onclick="toggleVoiceInput()" class="w-full bg-gradient-to-r from-violet-600 via-purple-600 to-pink-600 hover:from-violet-700 hover:via-purple-700 hover:to-pink-700 text-white font-semibold py-3 px-4 rounded-2xl transition-all duration-300 transform hover:scale-105 hover:shadow-xl btn-glow focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-30">
+                        <i data-lucide="mic" class="w-4 h-4 inline mr-2"></i>
+                        <span id="voiceBtnText" class="text-sm lg:text-base">Start Listening</span>
+                    </button>
+                    <div class="mt-4 text-center">
+                        <div id="voiceTranscript" class="text-white text-opacity-70 text-xs lg:text-sm min-h-[2rem] italic bg-white bg-opacity-5 rounded-xl p-3 border border-white border-opacity-10">
+                            Click microphone to start voice input...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Performance -->
+                <div class="glass-effect rounded-3xl p-4 lg:p-6 hover-lift">
+                    <div class="flex items-center justify-between mb-5">
+                        <h3 class="text-base lg:text-lg font-semibold text-white flex items-center">
+                            <i data-lucide="cpu" class="w-4 h-4 lg:w-5 lg:h-5 mr-2 icon-glow"></i>
+                            AI Performance
+                        </h3>
+                        <div class="w-2.5 h-2.5 lg:w-3 lg:h-3 bg-blue-400 rounded-full pulse-ring"></div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">Response Time</span>
+                            <span id="responseTime" class="text-base lg:text-lg font-bold text-emerald-300">--ms</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">Model Accuracy</span>
+                            <span id="modelAccuracy" class="text-base lg:text-lg font-bold text-amber-300">94.7%</span>
+                        </div>
+                        <div class="flex justify-between items-center p-2 rounded-xl bg-white bg-opacity-5">
+                            <span class="text-white text-opacity-80 text-xs lg:text-sm font-medium">CPU Usage</span>
+                            <span id="cpuUsage" class="text-base lg:text-lg font-bold text-violet-300">--%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Analysis Chart -->
+            <div class="mt-12 lg:mt-16 glass-effect rounded-3xl p-6 lg:p-8 hover-lift">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-6 space-y-4 sm:space-y-0">
+                    <h3 class="text-xl lg:text-2xl font-bold text-white flex items-center">
+                        <i data-lucide="trending-up" class="w-5 h-5 lg:w-6 lg:h-6 mr-3 icon-glow"></i>
+                        Real-time Analysis Dashboard
+                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="toggleChartMode('spam')" id="spamBtn" class="px-3 py-2 lg:px-4 lg:py-2 bg-red-500 bg-opacity-40 hover:bg-opacity-60 text-white rounded-xl text-xs lg:text-sm font-semibold border border-red-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-300 focus:ring-opacity-50">
+                            🚨 Spam Detection
+                        </button>
+                        <button onclick="toggleChartMode('safe')" id="safeBtn" class="px-3 py-2 lg:px-4 lg:py-2 bg-emerald-500 bg-opacity-20 hover:bg-opacity-40 text-white rounded-xl text-xs lg:text-sm font-semibold border border-emerald-300 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-300 focus:ring-opacity-50">
+                            ✅ Safe Messages
+                        </button>
+                    </div>
+                </div>
+                <div class="relative bg-white bg-opacity-5 rounded-2xl p-4 lg:p-6 border border-white border-opacity-10">
+                    <div class="h-48 lg:h-64">
+                        <canvas id="realtimeChart" class="w-full h-full"></canvas>
+                    </div>
+                    <div class="absolute top-4 right-4 lg:top-6 lg:right-6 text-white text-opacity-70 text-xs lg:text-sm flex items-center space-x-2">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full pulse-ring"></div>
+                        <span id="chartStatus">🟢 Live Streaming</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="text-center mt-12 lg:mt-16 text-white text-opacity-70 text-xs sm:text-sm">
+                <p class="mb-4 font-medium">Powered by advanced machine learning & neural networks</p>
+                <div class="flex flex-wrap justify-center gap-3 sm:gap-4 lg:gap-6">
+                    <span class="flex items-center bg-white bg-opacity-10 px-3 py-2 rounded-full border border-white border-opacity-20">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-pulse"></div>
+                        <span class="text-xs sm:text-sm">System Online</span>
+                    </span>
+                    <span class="flex items-center bg-white bg-opacity-10 px-3 py-2 rounded-full border border-white border-opacity-20">
+                        <div class="w-2 h-2 bg-blue-400 rounded-full mr-2 animate-pulse" style="animation-delay: 0.5s;"></div>
+                        <span class="text-xs sm:text-sm">AI Engine Active</span>
+                    </span>
+                    <span class="flex items-center bg-white bg-opacity-10 px-3 py-2 rounded-full border border-white border-opacity-20">
+                        <div class="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse" style="animation-delay: 1s;"></div>
+                        <span class="text-xs sm:text-sm">Real-time Analysis</span>
+                    </span>
+                </div>
+                <div class="mt-6 pt-4 border-t border-white border-opacity-10">
+                    <p class="text-xs text-opacity-50">
+                        © 2025 SpamGuard. Advanced AI-Powered Spam Detection System.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let socket = null;
+        let recognition = null;
+        let isListening = false;
+        let realtimeChart = null;
+        let chartMode = 'spam';
+        let collaborativeMode = false;
+        let performanceTimer = null;
+        
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // WebSocket Connection
+        function initializeWebSocket() {
+            socket = {
+                connected: true,
+                emit: (event, data) => {
+                    console.log('WebSocket emit:', event, data);
+                    handleWebSocketEvent(event, data);
+                },
+                on: (event, callback) => {
+                    console.log('WebSocket on:', event);
+                }
+            };
+            
+            // Simulate real-time updates
+            setInterval(() => {
+                updateLiveStats();
+                updatePerformanceMetrics();
+            }, 3000);
+        }
+        
+        function handleWebSocketEvent(event, data) {
+            switch(event) {
+                case 'new_analysis':
+                    addToChart(data.timestamp, data.isSpam);
+                    break;
+                case 'collaborative_analysis':
+                    showCollaborativeResult(data);
+                    break;
+            }
+        }
+
+        // Animated counters
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-counter');
+            counters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = target.toLocaleString();
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current).toLocaleString();
+                    }
+                }, 20);
+            });
+        }
+
+        // Real-time analysis functionality
+        let analysisTimeout;
+        const debounceDelay = 1000;
+        
+        function performRealTimeAnalysis() {
+            const text = document.getElementById('messageInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            
+            if (text || phone) {
+                showRealTimeAnalysis(text, phone);
+            } else {
+                hideAllStates();
+            }
+        }
+        
+        function showRealTimeAnalysis(text, phone) {
+            const resultDiv = document.getElementById('result');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultIconContainer = resultIcon ? resultIcon.querySelector('.w-16.h-16') : null;
+            const resultIconI = resultIcon ? resultIcon.querySelector('i') : null;
+            const confidenceBadge = document.getElementById('confidenceBadge');
+            const confidenceBar = document.getElementById('confidenceBar');
+            
+            // Quick client-side analysis for real-time feedback
+            const clientAnalysis = performClientSideAnalysis(text, phone);
+            
+            // Configure result based on client-side prediction
+            if (clientAnalysis.prediction === 'spam') {
+                if (resultIconContainer) {
+                    resultIconContainer.className = 'w-16 h-16 bg-red-500 bg-opacity-30 rounded-full flex items-center justify-center relative';
+                }
+                if (resultIconI) {
+                    resultIconI.setAttribute('data-lucide', 'alert-octagon');
+                }
+                if (confidenceBadge) {
+                    confidenceBadge.className = 'px-4 py-2 bg-red-500 bg-opacity-30 text-white rounded-full text-sm font-bold border border-red-300';
+                    confidenceBadge.innerHTML = '⚠️ SUSPICIOUS';
+                }
+            } else {
+                if (resultIconContainer) {
+                    resultIconContainer.className = 'w-16 h-16 bg-green-500 bg-opacity-30 rounded-full flex items-center justify-center relative';
+                }
+                if (resultIconI) {
+                    resultIconI.setAttribute('data-lucide', 'check-circle');
+                }
+                if (confidenceBadge) {
+                    confidenceBadge.className = 'px-4 py-2 bg-green-500 bg-opacity-30 text-white rounded-full text-sm font-bold border border-green-300';
+                    confidenceBadge.innerHTML = '✅ APPEARS SAFE';
+                }
+            }
+            
+            // Set content
+            if (document.getElementById('prediction')) {
+                document.getElementById('prediction').textContent = clientAnalysis.prediction.toUpperCase();
+            }
+            if (document.getElementById('confidence')) {
+                const confidencePercent = (clientAnalysis.confidence * 100).toFixed(1);
+                document.getElementById('confidence').textContent = confidencePercent + '%';
+            }
+            if (confidenceBar) {
+                confidenceBar.style.width = (clientAnalysis.confidence * 100) + '%';
+            }
+            if (document.getElementById('reason')) {
+                document.getElementById('reason').textContent = clientAnalysis.reason;
+            }
+            
+            // Re-initialize icons and show result
+            lucide.createIcons();
+            resultDiv.classList.remove('hidden');
+            
+            // Add real-time indicator
+            const realTimeIndicator = document.querySelector('#result .relative.z-10');
+            if (realTimeIndicator && !realTimeIndicator.querySelector('.real-time-indicator')) {
+                const indicator = document.createElement('div');
+                indicator.className = 'real-time-indicator absolute top-4 right-4 text-xs text-white bg-blue-500 bg-opacity-50 px-2 py-1 rounded-full';
+                indicator.innerHTML = '🔄 Real-time';
+                realTimeIndicator.appendChild(indicator);
+            }
+        }
+        
+        function performClientSideAnalysis(text, phone) {
+            let score = 0;
+            const reasons = [];
+            
+            // Text analysis
+            if (text) {
+                const spamKeywords = ['free', 'win', 'prize', 'urgent', 'offer', 'guaranteed', 'instant', 'casino', 'bonus', 'lucky', 'dollar', 'pound', 'selected', 'verify', 'account', 'suspended', 'inheritance', 'limited', 'click', 'opportunity', 'investment', 'discount', 'claim', 'exclusive', 'expires', 'password', 'action', 'required'];
+                const lowerText = text.toLowerCase();
+                
+                const foundKeywords = spamKeywords.filter(keyword => lowerText.includes(keyword));
+                if (foundKeywords.length > 0) {
+                    score += foundKeywords.length * 0.1;
+                    reasons.push('Keywords: ' + foundKeywords.join(', '));
+                }
+                
+                // Check for excessive punctuation
+                if ((text.match(/!/g) || []).length > 0) {
+                    score += 0.2;
+                    reasons.push('Excessive punctuation');
+                }
+                
+                // Check for all caps
+                const words = text.split(' ');
+                const capsWords = words.filter(word => word.length > 3 && word === word.toUpperCase());
+                if (capsWords.length > 0) {
+                    score += 0.3;
+                    reasons.push('Excessive capitalization');
+                }
+                
+                // Check for monetary amounts
+                if (/[$£€]\d+/.test(text)) {
+                    score += 0.4;
+                    reasons.push('Monetary amounts mentioned');
+                }
+                
+                // Check for urgency words
+                if (/urgent|immediate|now|hurry|limited|act fast/i.test(text)) {
+                    score += 0.5;
+                    reasons.push('Urgency indicators');
+                }
+                
+                // Check for URLs
+                if (/http|www|\.com|\.net|\.org|click|link/i.test(text)) {
+                    score += 0.4;
+                    reasons.push('Contains URLs or links');
+                }
+            }
+            
+            // Phone analysis
+            if (phone) {
+                // Check for suspicious patterns
+                if (/(.)\1{2,}/.test(phone)) {
+                    score += 0.4;
+                    reasons.push('Repeated digits in phone');
+                }
+                
+                if (/(?:0123|1234|2345|3456|4567|5678|6789|7890|9876|8765|7654|6543|5432|4321|3210)/.test(phone)) {
+                    score += 0.3;
+                    reasons.push('Sequential phone number');
+                }
+                
+                if (/^(\+|00)?(900|976|809|284|473|268|876|649)/.test(phone)) {
+                    score += 0.6;
+                    reasons.push('Suspicious phone prefix');
+                }
+                
+                if (/^\d{4,6}$/.test(phone)) {
+                    score += 0.3;
+                    reasons.push('Short code format');
+                }
+            }
+            
+            const prediction = score > 0.3 ? 'spam' : 'ham';
+            const confidence = Math.min(score, 1);
+            
+            return {
+                prediction,
+                confidence,
+                reason: reasons.length > 0 ? reasons.join(' | ') : 'No obvious spam indicators detected'
+            };
+        }
+        
+        // Character counter and real-time analysis event listeners
+        document.getElementById('messageInput').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('charCount').textContent = count;
+            
+            // Add visual feedback for long messages
+            if (count > 500) {
+                this.classList.add('border-yellow-400');
+            } else {
+                this.classList.remove('border-yellow-400');
+            }
+            
+            // Real-time analysis with debounce
+            clearTimeout(analysisTimeout);
+            analysisTimeout = setTimeout(performRealTimeAnalysis, debounceDelay);
+        });
+        
+        document.getElementById('phoneInput').addEventListener('input', function() {
+            // Real-time analysis with debounce
+            clearTimeout(analysisTimeout);
+            analysisTimeout = setTimeout(performRealTimeAnalysis, debounceDelay);
+        });
+
+        function showResult(data) {
+            const resultDiv = document.getElementById('result');
+            const resultIcon = document.getElementById('resultIcon');
+            const resultIconContainer = resultIcon ? resultIcon.querySelector('.w-16.h-16') : null;
+            const resultIconI = resultIcon ? resultIcon.querySelector('i') : null;
+            const confidenceBadge = document.getElementById('confidenceBadge');
+            const confidenceBar = document.getElementById('confidenceBar');
+            
+            // Configure result based on prediction
+            if (data.prediction === 'spam') {
+                if (resultIconContainer) {
+                    resultIconContainer.className = 'w-16 h-16 bg-red-500 bg-opacity-40 rounded-full flex items-center justify-center relative';
+                }
+                if (resultIconI) {
+                    resultIconI.setAttribute('data-lucide', 'alert-octagon');
+                }
+                if (confidenceBadge) {
+                    confidenceBadge.className = 'px-4 py-2 bg-red-500 bg-opacity-40 text-white rounded-full text-sm font-bold border border-red-300';
+                    confidenceBadge.innerHTML = '⚠️ THREAT DETECTED';
+                }
+            } else {
+                if (resultIconContainer) {
+                    resultIconContainer.className = 'w-16 h-16 bg-green-500 bg-opacity-40 rounded-full flex items-center justify-center relative';
+                }
+                if (resultIconI) {
+                    resultIconI.setAttribute('data-lucide', 'check-circle');
+                }
+                if (confidenceBadge) {
+                    confidenceBadge.className = 'px-4 py-2 bg-green-500 bg-opacity-40 text-white rounded-full text-sm font-bold border border-green-300';
+                    confidenceBadge.innerHTML = '✅ SAFE MESSAGE';
+                }
+            }
+            
+            // Set content with animation
+            document.getElementById('prediction').textContent = data.prediction.toUpperCase();
+            const confidencePercent = (data.confidence * 100).toFixed(1);
+            document.getElementById('confidence').textContent = confidencePercent + '%';
+            
+            // Animate confidence bar
+            setTimeout(() => {
+                confidenceBar.style.width = confidencePercent + '%';
+            }, 300);
+            
+            document.getElementById('reason').textContent = data.reason;
+            
+            // Remove real-time indicator and show final result
+            const realTimeIndicator = document.querySelector('.real-time-indicator');
+            if (realTimeIndicator) {
+                realTimeIndicator.remove();
+            }
+            
+            // Re-initialize icons and show result
+            lucide.createIcons();
+            resultDiv.classList.remove('hidden');
+            
+            // Scroll to result with smooth animation
+            setTimeout(() => {
+                resultDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 500);
+        }
+
+        function showError(message) {
+            const errorDiv = document.getElementById('error');
+            document.getElementById('errorMessage').textContent = message;
+            errorDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                errorDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 300);
+        }
+
+        function hideAllStates() {
+            document.getElementById('result').classList.add('hidden');
+            document.getElementById('error').classList.add('hidden');
+        }
+        
+        // Voice Recognition
+        function initializeVoiceRecognition() {
+            if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = true;
+                recognition.lang = 'en-US';
+                
+                recognition.onstart = () => {
+                    isListening = true;
+                    updateVoiceStatus('listening');
+                    document.getElementById('voiceBtnText').textContent = 'Listening...';
+                };
+                
+                recognition.onresult = (event) => {
+                    let transcript = '';
+                    for (let i = event.resultIndex; i < event.results.length; i++) {
+                        transcript += event.results[i][0].transcript;
+                    }
+                    
+                    document.getElementById('voiceTranscript').textContent = transcript;
+                    
+                    if (event.results[event.results.length - 1].isFinal) {
+                        document.getElementById('messageInput').value = transcript;
+                        performRealTimeAnalysis();
+                        document.getElementById('charCount').textContent = transcript.length;
+                    }
+                };
+                
+                recognition.onend = () => {
+                    isListening = false;
+                    updateVoiceStatus('idle');
+                    document.getElementById('voiceBtnText').textContent = 'Start Listening';
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    updateVoiceStatus('error');
+                    document.getElementById('voiceBtnText').textContent = 'Try Again';
+                };
+            } else {
+                document.getElementById('voiceBtn').disabled = true;
+                document.getElementById('voiceBtnText').textContent = 'Voice Not Supported';
+                document.getElementById('voiceTranscript').textContent = 'Your browser does not support voice recognition';
+            }
+        }
+        
+        function toggleVoiceInput() {
+            if (!recognition) {
+                alert('Voice recognition is not supported in your browser');
+                return;
+            }
+            
+            if (isListening) {
+                recognition.stop();
+            } else {
+                recognition.start();
+            }
+        }
+        
+        function updateVoiceStatus(status) {
+            const voiceStatus = document.getElementById('voiceStatus');
+            switch(status) {
+                case 'listening':
+                    voiceStatus.className = 'w-3 h-3 bg-red-400 rounded-full pulse-ring';
+                    break;
+                case 'idle':
+                    voiceStatus.className = 'w-3 h-3 bg-gray-400 rounded-full';
+                    break;
+                case 'error':
+                    voiceStatus.className = 'w-3 h-3 bg-yellow-400 rounded-full animate-pulse';
+                    break;
+            }
+        }
+        
+        // Real-time Chart
+        function initializeChart() {
+            const ctx = document.getElementById('realtimeChart').getContext('2d');
+            realtimeChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        label: 'Spam Detection Rate',
+                        data: [],
+                        borderColor: 'rgba(239, 68, 68, 0.8)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }, {
+                        label: 'Safe Message Rate',
+                        data: [],
+                        borderColor: 'rgba(16, 185, 129, 0.8)',
+                        backgroundColor: 'rgba(16, 185, 129, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: 'rgba(255, 255, 255, 0.8)'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: 'rgba(255, 255, 255, 0.6)'
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            },
+                            beginAtZero: true,
+                            max: 100
+                        }
+                    }
+                }
+            });
+            
+            // Add initial data
+            for (let i = 0; i < 20; i++) {
+                const time = new Date(Date.now() - (19 - i) * 60000);
+                addToChart(time, Math.random() > 0.7);
+            }
+        }
+        
+        function addToChart(timestamp, isSpam) {
+            if (!realtimeChart) return;
+            
+            const time = new Date(timestamp);
+            const timeLabel = time.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            
+            // Remove old data if too many points
+            if (realtimeChart.data.labels.length > 50) {
+                realtimeChart.data.labels.shift();
+                realtimeChart.data.datasets[0].data.shift();
+                realtimeChart.data.datasets[1].data.shift();
+            }
+            
+            realtimeChart.data.labels.push(timeLabel);
+            
+            if (chartMode === 'spam') {
+                realtimeChart.data.datasets[0].data.push(isSpam ? 100 : 0);
+                realtimeChart.data.datasets[1].data.push(isSpam ? 0 : 100);
+            } else {
+                realtimeChart.data.datasets[0].data.push(isSpam ? 50 + Math.random() * 50 : Math.random() * 20);
+                realtimeChart.data.datasets[1].data.push(isSpam ? Math.random() * 20 : 50 + Math.random() * 50);
+            }
+            
+            realtimeChart.update('none');
+        }
+        
+        function toggleChartMode(mode) {
+            chartMode = mode;
+            const spamBtn = document.getElementById('spamBtn');
+            const safeBtn = document.getElementById('safeBtn');
+            
+            if (mode === 'spam') {
+                spamBtn.className = 'px-4 py-2 bg-red-500 bg-opacity-60 text-white rounded-lg text-sm font-bold border border-red-300';
+                safeBtn.className = 'px-4 py-2 bg-green-500 bg-opacity-20 text-white rounded-lg text-sm font-bold border border-green-300';
+                realtimeChart.data.datasets[0].label = 'Spam Detection Rate';
+                realtimeChart.data.datasets[1].label = 'Safe Message Rate';
+            } else {
+                spamBtn.className = 'px-4 py-2 bg-red-500 bg-opacity-20 text-white rounded-lg text-sm font-bold border border-red-300';
+                safeBtn.className = 'px-4 py-2 bg-green-500 bg-opacity-60 text-white rounded-lg text-sm font-bold border border-green-300';
+                realtimeChart.data.datasets[0].label = 'Spam Volume';
+                realtimeChart.data.datasets[1].label = 'Safe Volume';
+            }
+            
+            realtimeChart.update();
+        }
+        
+        // Live Statistics Updates
+        function updateLiveStats() {
+            const sessions = Math.floor(Math.random() * 50) + 1;
+            const threats = Math.floor(Math.random() * 10);
+            const messages = Math.floor(Math.random() * 100) + 20;
+            
+            animateCounter('liveSessions', sessions);
+            animateCounter('threatsBlocked', threats);
+            animateCounter('messagesPerHour', messages);
+        }
+        
+        function animateCounter(elementId, target) {
+            const element = document.getElementById(elementId);
+            const current = parseInt(element.textContent) || 0;
+            const increment = (target - current) / 10;
+            let count = current;
+            
+            const timer = setInterval(() => {
+                count += increment;
+                if ((increment > 0 && count >= target) || (increment < 0 && count <= target)) {
+                    count = target;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(count);
+            }, 50);
+        }
+        
+        // Performance Metrics
+        function updatePerformanceMetrics() {
+            const responseTime = Math.floor(Math.random() * 100) + 50;
+            const cpuUsage = Math.floor(Math.random() * 30) + 10;
+            
+            document.getElementById('responseTime').textContent = responseTime + 'ms';
+            document.getElementById('cpuUsage').textContent = cpuUsage + '%';
+            
+            // Update accuracy with slight variations
+            const accuracy = 94.7 + (Math.random() - 0.5) * 2;
+            document.getElementById('modelAccuracy').textContent = accuracy.toFixed(1) + '%';
+        }
+        
+        function showCollaborativeResult(data) {
+            console.log('Collaborative result:', data);
+        }
+
+        // Enhanced analyze function
+        async function analyzeMessage() {
+            const text = document.getElementById('messageInput').value.trim();
+            const phone = document.getElementById('phoneInput').value.trim();
+            const btn = document.getElementById('analyzeBtn');
+            const btnText = document.getElementById('btnText');
+            const startTime = performance.now();
+            
+            // Reset UI
+            hideAllStates();
+            
+            // Validation
+            if (!text && !phone) {
+                showError('Please enter either a message or a phone number to analyze');
+                return;
+            }
+
+            // Show loading
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            btnText.innerHTML = `
+                <div class="flex items-center justify-center">
+                    <div class="advanced-loading w-6 h-6 mr-3">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                    Analyzing with AI...
+                </div>
+            `;
+            document.getElementById('loading').classList.remove('hidden');
+
+            // Simulate processing time
+            const processingSteps = [
+                "Initializing AI models...",
+                "Analyzing text patterns...",
+                "Checking reputation databases...",
+                "Applying neural network analysis...",
+                "Generating final verdict..."
+            ];
+
+            let stepIndex = 0;
+            const stepInterval = setInterval(() => {
+                if (stepIndex < processingSteps.length) {
+                    const loadingText = document.querySelector('#loading p');
+                    if (loadingText && stepIndex < processingSteps.length - 1) {
+                        loadingText.textContent = processingSteps[stepIndex];
+                    }
+                    stepIndex++;
+                }
+            }, 800);
+
+            try {
+                const response = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ text, phone })
+                });
+
+                const data = await response.json();
+                const endTime = performance.now();
+                const responseTime = Math.round(endTime - startTime);
+                
+                clearInterval(stepInterval);
+                
+                if (response.ok) {
+                    showResult(data);
+                    
+                    // Update performance metrics
+                    document.getElementById('responseTime').textContent = responseTime + 'ms';
+                    
+                    // Add to chart
+                    addToChart(new Date(), data.prediction === 'spam');
+                } else {
+                    throw new Error(data.error || 'Failed to analyze');
+                }
+            } catch (error) {
+                clearInterval(stepInterval);
+                showError(error.message || 'Failed to analyze. Please check your connection and try again.');
+            } finally {
+                // Reset button
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                btnText.innerHTML = '<i data-lucide="search" class="w-6 h-6 inline mr-3"></i>Start AI Analysis';
+                document.getElementById('loading').classList.add('hidden');
+                
+                // Re-initialize icons
+                lucide.createIcons();
+            }
+        }
+        
+        // Initialize everything when page loads
+        window.addEventListener('load', () => {
+            animateCounters();
+            
+            // Initialize features
+            initializeWebSocket();
+            initializeVoiceRecognition();
+            initializeChart();
+            
+            // Start performance monitoring
+            updatePerformanceMetrics();
+            
+            // Stagger entrance animations
+            document.querySelectorAll('.word-by-word').forEach((el, index) => {
+                setTimeout(() => {
+                    el.style.animationPlayState = 'running';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>

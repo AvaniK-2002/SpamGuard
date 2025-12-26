@@ -15,7 +15,7 @@ require('./src/train');
 
 // Serve the HTML page
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 // API endpoint for spam analysis

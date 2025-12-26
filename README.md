@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # SpamGuard 🚀
 
 <div align="center">
@@ -78,10 +77,12 @@ SpamGuard/
 │   ├── model.js        # ML model implementation
 │   ├── preprocessor.js # Text preprocessing
 │   └── train.js        # Model training logic
-├── 📄 api.py           # Python API endpoints
-├── 📄 model.py         # Python ML model
+├── 📄 index.js         # Express server entry point
+├── 📄 model.js         # ML model (legacy)
+├── 📄 train.js         # Training script (legacy)
 ├── 📄 dataset.csv      # Training dataset
-└── 📄 package.json     # Node.js dependencies
+├── 📄 package.json     # Node.js dependencies
+└── 📄 README.md        # Project documentation
 ```
 
 ## 🎮 How to Use
@@ -107,7 +108,7 @@ const response = await fetch('/analyze', {
 
 const result = await response.json();
 // {
-//   "prediction": "spam" | "not_spam",
+//   "prediction": "spam" | "ham",
 //   "confidence": 0.95,
 //   "reason": "Contains suspicious keywords..."
 // }
@@ -185,7 +186,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Natural Language Processing**: Inspired by modern NLP research
 - **Design Patterns**: UI/UX best practices from leading tech companies
 - **Open Source Community**: For the amazing tools and libraries
-
-
-=======
-
